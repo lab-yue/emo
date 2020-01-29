@@ -119,7 +119,6 @@ fn main() -> Result<(), failure::Error> {
                     }
                 }
                 Key::Esc => {
-                    events.enable_exit_key();
                     break;
                 }
                 _ => {}
