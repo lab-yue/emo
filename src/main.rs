@@ -43,7 +43,7 @@ fn main() -> Result<(), failure::Error> {
     let mut terminal = Terminal::new(backend)?;
 
     // Setup event handlers
-    let mut events = Events::new();
+    let events = Events::new();
 
     // Create default app state
     let mut app = App::default();
