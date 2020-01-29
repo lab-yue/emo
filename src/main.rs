@@ -114,7 +114,7 @@ fn main() -> Result<(), failure::Error> {
                     }
                 }
                 Key::Down => {
-                    if app.index != app.messages.len() as i32 {
+                    if app.index != app.messages.len() as i32 - 1 {
                         app.index += 1;
                     }
                 }
