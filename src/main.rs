@@ -51,6 +51,11 @@ fn main() -> Result<(), failure::Error> {
     loop {
         // Draw UI
         terminal.draw(|mut f| {
+            app.messages = emoji::search(app.input.to_string())
+                .iter()
+                .enumerate()
+                .map(|(i, e)| format!("{}: {} {}", i, e.icon, e.name))
+                .collect();
             let chunks = Layout::default()
                 .direction(Direction::Vertical)
                 .margin(2)
@@ -67,10 +72,9 @@ fn main() -> Result<(), failure::Error> {
                 .style(Style::default().fg(Color::Yellow))
                 .block(Block::default().borders(Borders::ALL).title("Input"))
                 .render(&mut f, chunks[1]);
-            let res = emoji::search(app.input.to_string());
-            let messages = res.iter().enumerate().map(|(i, e)| {
+            let messages = app.messages.iter().enumerate().map(|(i, e)| {
                 Text::styled(
-                    format!("{}: {} {}", i, e.icon, e.name),
+                    e,
                     Style::default().fg(if app.index == i as i32 {
                         Color::Yellow
                     } else {
@@ -110,7 +114,7 @@ fn main() -> Result<(), failure::Error> {
                     }
                 }
                 Key::Down => {
-                    if app.index != 10 {
+                    if app.index != app.messages.len() as i32 {
                         app.index += 1;
                     }
                 }
